@@ -1,0 +1,24 @@
+# Macro file for example B1
+# 
+# Can be run in batch, without graphic
+# or interactively: Idle> /control/execute run1.mac
+#
+# Change the default number of workers (in multi-threading mode) 
+#/run/numberOfThreads 4
+#
+# Initialize kernel
+/run/initialize
+#
+#create the particle beam with Gaussian distribution
+/gps/particle e-
+/gps/energy 6 MeV
+/gps/pos/type Beam
+/gps/pos/shape Circle
+/gps/pos/radius 0.5 mm
+#/gps/pos/rot1 0 0 0
+/gps/pos/sigma_r 0.65 mm
+/gps/pos/centre 0. 0. -760. mm
+/gps/direction 0 0 1
+
+# run
+/run/beamOn 20

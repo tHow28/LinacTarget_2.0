@@ -1,0 +1,39 @@
+# Macro file for example B1
+# 
+# Can be run in batch, without graphic
+# or interactively: Idle> /control/execute run1.mac
+#
+# Change the default number of workers (in multi-threading mode) 
+#/run/numberOfThreads 4
+
+# define full scoring mesh
+/score/create/cylinderMesh targetMesh
+/score/mesh/cylinderSize 5 1.335 mm
+/score/mesh/nBin 10 10 10
+#/score/mesh/rotate/rotateY -90 deg
+/score/mesh/translate/xyz 0. 0. 0.165 mm
+/score/quantity/energyDeposit energyDeposit MeV
+/score/close
+
+# Initialize kernel
+/run/initialize
+#
+#create the particle beam with Gaussian distribution
+/gps/particle e-
+/gps/energy 6 MeV
+/gps/pos/type Beam
+/gps/pos/shape Circle
+/gps/pos/radius 0.5 mm
+#/gps/pos/rot1 0 0 0
+/gps/pos/sigma_r 0.65 mm
+/gps/pos/centre 0. 0. -10. mm
+/gps/direction 0 0 1
+
+# run
+/run/beamOn 100
+
+# dump scores to a file
+/score/dumpQuantityToFile targetMesh energyDeposit energyDist.csv
+
+#draw projection of scoring mesh
+/score/drawProjection targetMesh energyDeposit
